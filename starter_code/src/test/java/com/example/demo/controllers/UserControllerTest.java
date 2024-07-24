@@ -28,10 +28,10 @@ public class UserControllerTest {
         User user = new User();
         Cart cart = new Cart();
         user.setId(0);
-        user.setUsername("test");
+        user.setUsername("dat");
         user.setPassword("testPassword");
         user.setCart(cart);
-        when(userRepo.findByUsername("test")).thenReturn(user);
+        when(userRepo.findByUsername("dat")).thenReturn(user);
         when(userRepo.findById(0L)).thenReturn(java.util.Optional.of(user));
         when(userRepo.findByUsername("someone")).thenReturn(null);
 
@@ -45,7 +45,7 @@ public class UserControllerTest {
     public void create_user_happy_path() throws Exception{
         when(encoder.encode("testPassword")).thenReturn("thisIsHashed");
         CreateUserRequest r = new CreateUserRequest();
-        r.setUsername("test");
+        r.setUsername("dat");
         r.setPassword("testPassword");
         r.setConfirmPassword("testPassword");
 
@@ -56,14 +56,14 @@ public class UserControllerTest {
 
         User u = response.getBody();
         assertNotNull(u);
-        assertEquals("test", u.getUsername());
+        assertEquals("dat", u.getUsername());
         assertEquals("thisIsHashed", u.getPassword());
     }
 
     @Test
     public void create_user_password_too_short() {
         CreateUserRequest r = new CreateUserRequest();
-        r.setUsername("test");
+        r.setUsername("dat");
         r.setPassword("short");
         r.setConfirmPassword("short");
         final ResponseEntity<User> response = userController.createUser(r);
@@ -74,7 +74,7 @@ public class UserControllerTest {
     @Test
     public void create_user_password_confirm_mismatch() {
         CreateUserRequest r = new CreateUserRequest();
-        r.setUsername("test");
+        r.setUsername("dat");
         r.setPassword("alongpassword");
         r.setConfirmPassword("aLongpassWord");
         final ResponseEntity<User> response = userController.createUser(r);
@@ -84,12 +84,12 @@ public class UserControllerTest {
 
     @Test
     public void find_user_by_name_happy_path() {
-        final ResponseEntity<User> response = userController.findByUserName("test");
+        final ResponseEntity<User> response = userController.findByUserName("dat");
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue());
         User u = response.getBody();
         assertNotNull(u);
-        assertEquals("test", u.getUsername());
+        assertEquals("dat", u.getUsername());
     }
 
     @Test
